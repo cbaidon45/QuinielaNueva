@@ -167,6 +167,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
         jCheckBox36 = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jButton8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -243,7 +244,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton4)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -335,7 +336,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jCheckBox27))
                     .addComponent(jButton7))
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -409,7 +410,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton4)
                     .addComponent(jButton7))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Quiniela", jPanel1);
@@ -445,7 +446,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3)
                     .addComponent(jButton2))
-                .addContainerGap(369, Short.MAX_VALUE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,7 +464,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jTextField19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Equipos", jPanel3);
@@ -554,9 +555,9 @@ public class QuinielaGUI extends javax.swing.JFrame {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jButton5AncestorAdded(evt);
             }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -582,6 +583,13 @@ public class QuinielaGUI extends javax.swing.JFrame {
         jCheckBox34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox34ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/paquete/rsz_1024px-edit-clearsvg.png"))); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -680,7 +688,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCheckBox36)
                                     .addComponent(jCheckBox35))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 187, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -699,7 +707,10 @@ public class QuinielaGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox36, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton8)))
                         .addGap(198, 198, 198))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -778,13 +789,15 @@ public class QuinielaGUI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jButton5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                                 .addComponent(jButton6))
                             .addComponent(jButton1))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jButton8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(37, 37, 37))))
@@ -830,6 +843,7 @@ String query="INSERT INTO equipos (IdEquipo, Nombre, Posicion)VALUES ("+IdEquipo
         + ", '"+Nombre+"', "+posicion+");";
 //System.out.println(query);
 AgregarEquipo(query);
+LimpiarIdsEquipos();
 ActualizaInterfaz();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -889,6 +903,16 @@ ActualizaInterfaz();
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
 LimpiarInterfaz();
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        JTextField[] ListaTextField = {jTextField1,jTextField2,jTextField3,jTextField4,jTextField5,jTextField6,jTextField7,
+        jTextField8,jTextField9,jTextField10,jTextField11,jTextField12,jTextField13,jTextField14,jTextField15,jTextField16,
+        jTextField17,jTextField18};
+        JCheckBox[] ListaCheckBox2 = {jCheckBox28,jCheckBox29,jCheckBox30,jCheckBox31,jCheckBox32,jCheckBox33,jCheckBox34,jCheckBox35,jCheckBox36};
+        LimpiarResultados(ListaTextField);
+        ComparaPronosticoResultado(ListaCheckBox2);
+        ActualizaInterfaz();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1616,6 +1640,24 @@ connection.close();
         ActualizarMarcadores("Visitante", Visitante);
     }
     
+    public void LimpiarResultados(JTextField ListaTextField[]){
+        int [] Local= new int[10];
+        int [] Visitante= new int[10];
+        int contador=1;
+        int PosicionArreglo=0;
+    do{
+        PosicionArreglo=(contador*2)-2;
+        Local[contador-1]=0;
+        ListaTextField[PosicionArreglo].setText("0");
+        PosicionArreglo=(contador*2)-1;
+        Visitante[contador-1]=0;
+        ListaTextField[PosicionArreglo].setText("0");
+        contador=contador+1;
+    }while(contador<=9);
+        ActualizarMarcadores("Local", Local);
+        ActualizarMarcadores("Visitante", Visitante);
+}
+    
     public void ActualizarMarcadores(String LocalVisitante,int Arreglo[]){
       Connection connection=null;
       ResultSet resultados=null;
@@ -2042,6 +2084,7 @@ connection.close();
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;
