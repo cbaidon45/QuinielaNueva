@@ -51,6 +51,7 @@ public class QuinielaGUI extends javax.swing.JFrame {
         System.out.println(connectionPath);
         //ObtenerIdEquipos();
     ActualizaInterfaz();
+//Una vez que se terminen de realizar los cambios en la logica volvere a actualizar la interfaz
     }
     
     /**
@@ -173,6 +174,11 @@ public class QuinielaGUI extends javax.swing.JFrame {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.setMinimumSize(new java.awt.Dimension(120, 30));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox2.setMinimumSize(new java.awt.Dimension(120, 20));
@@ -835,16 +841,19 @@ public class QuinielaGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-//INSERT INTO Equipos (IdEquipo, Nombre, Posicion)VALUES (2, 'Equipo2', 0);
+//Ya revise esta opcion para la nueva version 17-Abril-2019
+//INSERT INTO Equipos (IdEquipo, Nombre, Posicion)VALUES (2, 'Orden', 0);
 int IdEquipo=ContarEquipos()+1;
 String Nombre=jTextField19.getText();
-int posicion=0;
-String query="INSERT INTO equipos (IdEquipo, Nombre, Posicion)VALUES ("+IdEquipo+""
-        + ", '"+Nombre+"', "+posicion+");";
-//System.out.println(query);
+String query="INSERT INTO equipos (IdEquipo, Nombre,Orden)VALUES ("
+        +IdEquipo+""
+        +", '"+Nombre+"', 0"
+        +");";
+System.out.println(query);
 AgregarEquipo(query);
 LimpiarIdsEquipos();
-ActualizaInterfaz();
+//ActualizaInterfaz();
+//Una vez que se terminen de realizar los cambios en la logica volvere a actualizar la interfaz
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -865,9 +874,17 @@ ActualizaInterfaz();
         jCheckBox11,jCheckBox12,jCheckBox13,jCheckBox14,jCheckBox15,jCheckBox16,jCheckBox17,jCheckBox18,jCheckBox19,jCheckBox20,jCheckBox21,
         jCheckBox22,jCheckBox23,jCheckBox24,jCheckBox25,jCheckBox26,jCheckBox27};
         JCheckBox[] ListaCheckBox2 = {jCheckBox28,jCheckBox29,jCheckBox30,jCheckBox31,jCheckBox32,jCheckBox33,jCheckBox34,jCheckBox35,jCheckBox36};
-        GuardarPosicionesQuiniela(ListaComboBox);
-        GuardarQuinielaUsuario(ListaCheckBox,ListaCheckBox2);
-        ActualizaInterfaz();
+        //AgregarEquiposComboBox(ListaComboBox); ya esta funcionando y en ActualizaInterfaz
+        //PonerJornadaComboBox(ListaComboBox,15); ya esta funcionando y en ActualizaInterfaz
+        //En este boton se Guardara la jornada, las quinielas individuales se van a registrar en otro boton
+        //El siguiente paso sera inicializar las jornadas para que estos metodos queden completos
+        GuardarJornada(ListaComboBox);
+        
+//Guardar QuinielaUsuario sera un metodo separado para poder brindar una mejor funcionalidad al programa
+//va a estar ubicado en otro boton, primero se revisara la funcionalidad de las jornadas
+//GuardarQuinielaUsuario(ListaCheckBox,ListaCheckBox2);
+//   ActualizaInterfaz();
+//Una vez que se terminen de realizar los cambios en la logica volvere a actualizar la interfaz
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -913,6 +930,10 @@ LimpiarInterfaz();
         ComparaPronosticoResultado(ListaCheckBox2);
         ActualizaInterfaz();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -977,6 +998,40 @@ connection.close();
         System.err.println(exception);
     }
     return MaxIdEquipo;
+    }
+    
+        public boolean ChecarJornada(int jornada){
+            boolean checarJornada=false;
+    //Con este metodo revisare si la jornada ya se ha registrado anteriormente o si es la primera vez
+    //String username="sql12272834";
+    //String password="jInC6T7H6S";
+    String query="SELECT COUNT(IdJornada) FROM jornada where IdJornada="+jornada+";";
+    int MaxIdEquipo=0;
+    //String connectionPath="jdbc:mysql://localhost:3306/proveedores";
+    //String connectionPath2="jdbc:mysql://sql12.freemysqlhosting.net:3306/Equipos?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    //String connectionPath2="jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12272834";
+    //jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    Connection connection=null;
+    ResultSet resultados=null;
+    try{
+//System.out.println(username +" " +password);
+connection=DriverManager.getConnection(connectionPath,username,password);
+PreparedStatement statement= connection.prepareStatement(query);
+resultados=statement.executeQuery();
+while (resultados.next()){
+    MaxIdEquipo=resultados.getInt("COUNT(IdJornada)");
+   // System.out.println(MaxIdEquipo);
+}
+statement.close();
+connection.close();
+
+    }catch(SQLException exception){
+        JOptionPane.showMessageDialog(null, exception);
+        System.err.println(exception);
+    }
+    if(MaxIdEquipo>0)
+        checarJornada=true;
+    return checarJornada;
     }
     
     public void AgregarEquipo(String query){
@@ -1132,7 +1187,8 @@ connection.close();
     public void AgregarEquiposComboBox(JComboBox ListaComboBox[]){
     //String username="sql12272834";
     //String password="jInC6T7H6S";
-    String query="SELECT Nombre FROM equipos ORDER BY IdEquipo ASC";
+    //Parece que ya esta lista esta funcion vamos a probarla
+    String query="SELECT Nombre FROM equipos ORDER BY Orden ASC";
     int contador=0;
     int MaxIdEquipo=ContarEquipos();
     String[] Nombres = new String[MaxIdEquipo];
@@ -1174,18 +1230,22 @@ connection.close();
     }
     contador=contador+1;
     }while(contador<36);
-     int [] IdEquipos=ObtenerIdEquipos();
-        Posicion(IdEquipos);
+//     Una vez que se pueda guardar la posicion exitosamente vamos a regresar a este punto para poder mostrar la jornada 
+//     int [] IdEquipos=ObtenerIdEquipos();
+//        Posicion(IdEquipos);
     }
-      
-    public int[] ObtenerIdEquipos(){
+    
+    public int[] ObtenerIdEquiposNombre(String []Nombres){
+    //Esta funcion me regresara los IdEquipo cuando yo le de los Nombres
+    //Ya quedo lista esta funcion
+        
     //String username="sql12272834";
     //String password="jInC6T7H6S";
     int Equipo=0;
     int [] IdEquipos= new int[20];
-    int contador=1;
+    int contador=0;
     do{
-    String query="SELECT IdEquipo FROM equipos WHERE Posicion="+contador;
+    String query="SELECT IdEquipo FROM equipos WHERE Nombre="+'"'+Nombres[contador]+'"';
      //   System.out.println(query);
     //String connectionPath="jdbc:mysql://localhost:3306/proveedores";
     //String connectionPath2="jdbc:mysql://sql12.freemysqlhosting.net:3306/Equipos?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -1210,14 +1270,15 @@ connection.close();
         System.err.println(exception);
     }
     contador=contador+1;
-    }while(contador<19);
+        System.out.println(contador);
+    }while(contador<18);
     
-   // System.out.println(Equipo);
+        System.out.println("Se termino el metodo Obtener IdEquipos");
     return IdEquipos;    
-    
     }
     
     public void Posicion(int [] IdEquipos){
+        //Primero vamos a trabajar en guardar la posicion y mas adelante regresare a este metodo para poder mostrarla en pantalla
         //Posicion 1
         //SELECT IdEquipo FROM Equipos WHERE Posicion=10
         //Equipo 1, Id 2, Posicion 1
@@ -1240,57 +1301,26 @@ connection.close();
         int IdEquipo=0;
     }
     
-    public void GuardarPosicionesQuiniela(JComboBox ListaComboBox[]){
-    //String username="sql12272834";
-    //String password="jInC6T7H6S";
+    public void GuardarJornada(JComboBox ListaComboBox[]){
+    String [] Nombres= new String[18];
+    int []IdEquipos=new int[18];
+
     int contador=0;
-    String query="UPDATE equipos SET Posicion = CASE IdEQuipo ";
-            do{
-            query=query+"WHEN "+ (ListaComboBox[contador].getSelectedIndex()+1) +" THEN "+(contador+1)+" ";
-                System.out.println("Item Seleccionado es el #:"+ListaComboBox[contador].getSelectedIndex());
-            //query=query+"WHEN "+(contador+1)+" THEN "+(ListaComboBox[contador].getSelectedIndex()+1)+" ";
-            ListaComboBox[contador].setEnabled(false);
-            ListaComboBox[contador+18].setEnabled(false);
-                    contador=contador+1;
-                    }while(contador<18);
-            query=query+"END;";
-        System.out.println(query);        
-    //UPDATE Equipos 
-   //SET Posicion = CASE IdEQuipo 
-   //WHEN 1   THEN 18
-   //WHEN 2   THEN 17 
-   //WHEN 3   THEN 16 
-   //WHEN 4   THEN 15 
-   //WHEN 5   THEN 14 
-   //WHEN 6   THEN 13 
-   //WHEN 7   THEN 12 
-   //WHEN 8   THEN 11 
-   //WHEN 9   THEN 10 
-   //WHEN 10  THEN 9 
-   //WHEN 11  THEN 8 
-   //WHEN 12  THEN 7 
-   //WHEN 13  THEN 6
-   //WHEN 14  THEN 5 
-   //WHEN 15  THEN 4
-   //WHEN 16  THEN 3 
-   //WHEN 17  THEN 2 
-   //WHEN 18  THEN 1 
-   //END;
-   // String connectionPath2="jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12272834";
-    Connection connection=null;
-    ResultSet resultados=null;
-    try{
-connection=DriverManager.getConnection(connectionPath,username,password);
-PreparedStatement statement= connection.prepareStatement(query);
-        System.out.println(query);
-statement.executeUpdate();
-statement.close();
-connection.close();
-    }catch(SQLException exception){
-        JOptionPane.showMessageDialog(null, exception);
-        System.err.println(exception);
-    }
-    AgregarEquiposComboBox(ListaComboBox);
+    do{
+       Nombres[contador]=ListaComboBox[contador].getSelectedItem()+"";
+       contador++;
+        }while(contador<18);
+        IdEquipos=ObtenerIdEquiposNombre(Nombres);
+    //Este metodo ya quedo, ahora sigue acomodar a los equipos segun la posicion que tengan
+    //INSERT INTO jornada(IdEquipo, Posicion,IdJornada) VALUES (1,5,18),(18,5,1);
+    if(ChecarJornada(11))
+    //System.out.println("Jornada ya registrada");
+    ActualizarJornada(15, IdEquipos);    
+    //true
+    else
+    AgregarJornadaNueva(15, IdEquipos);
+//System.out.println("Jornada Nueva");
+    //false    
     }
     
     public void GuardarQuinielaUsuario(JCheckBox ListaCheckBox[],JCheckBox ListaCheckBox2[]){
@@ -1960,10 +1990,11 @@ connection.close();
     jTextField8,jTextField9,jTextField10,jTextField11,jTextField12,jTextField13,jTextField14,jTextField15,jTextField16,
     jTextField17,jTextField18};
     JCheckBox[] ListaCheckBox2 = {jCheckBox28,jCheckBox29,jCheckBox30,jCheckBox31,jCheckBox32,jCheckBox33,jCheckBox34,jCheckBox35,jCheckBox36};
-    AgregarQuinielaCheckBox(ListaCheckBox);
+    //AgregarQuinielaCheckBox(ListaCheckBox);
     AgregarEquiposComboBox(ListaComboBox);
-    ActualizarTextField(ListaTextField);
-    ActualizarInterfaceTextFields(ListaCheckBox, ListaCheckBox2);
+    PonerJornadaComboBox(ListaComboBox,15);
+    //ActualizarTextField(ListaTextField);
+    //ActualizarInterfaceTextFields(ListaCheckBox, ListaCheckBox2);
     }
     
     public void ActualizarInterfaceTextFields(JCheckBox ListaCheckBox[],JCheckBox ListaCheckBox2[]){
@@ -2018,14 +2049,14 @@ connection.close();
         System.err.println(exception);
     }
  contador=0;
- int IdEquipo=0;
- query="UPDATE Equipos SET IdEquipo = CASE Nombre";
+ int Orden=0;
+ query="UPDATE Equipos SET Orden = CASE Nombre";
  //Ya tengo los nombres en el arreglo Nombres[]
 //UPDATE Equipos 
 //   SET IdEquipo = CASE Nombre 
 do{
-    IdEquipo=contador+1;
-    query=query+" WHEN '"+Nombres[contador]+"' THEN "+IdEquipo;
+    Orden=contador+1;
+    query=query+" WHEN '"+Nombres[contador]+"' THEN "+Orden;
     contador=contador+1;
 }while(contador<MaxIdEquipo);
 query=query+" END;";
@@ -2044,6 +2075,120 @@ connection.close();
         System.err.println(exception);
     }
     }
+    
+    public void AgregarJornadaNueva(int jornada, int []IdEquipos){
+        int contador=0;
+        int posicion=1;
+    //INSERT INTO jornada(IdJornada,P01,P02,P03,P04,P05,P06,P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18) 
+    //VALUES(15,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
+        String query="INSERT INTO jornada(IdJornada,P01,P02,P03,P04,P05,P06,P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18) VALUES("+jornada+",";
+            do{
+                query=query+
+                IdEquipos[contador];
+                if(contador<17)
+                    query=query+",";
+                else
+                    query=query+");";
+                contador++;
+                    }while(contador<18);
+  
+        System.out.println(query);   
+    //Hasta aqui parece que la query va bien, falta realizar los cambios en la tabla y continuar modificando este metodo
+    Connection connection=null;
+    ResultSet resultados=null;
+    try{
+    connection=DriverManager.getConnection(connectionPath,username,password);
+    PreparedStatement statement= connection.prepareStatement(query);
+    System.out.println(query);
+    statement.executeUpdate();
+    statement.close();
+    connection.close();
+    }catch(SQLException exception){
+        JOptionPane.showMessageDialog(null, exception);
+        System.err.println(exception);
+    }
+    }
+    
+    public void ActualizarJornada(int jornada, int []IdEquipos){
+        int contador=0;
+        int posicion=1;
+        String auxiliar="";
+    //UPDATE jornada SET P01=1,P02=2 WHERE IdJornada=15 
+    
+        String query="UPDATE jornada SET ";
+            do{
+                if((contador+1)>9)
+                auxiliar="P"+(contador+1)+"=";
+                else
+                auxiliar="P0"+(contador+1)+"=";    
+                query=query+
+                auxiliar+
+                IdEquipos[contador];
+                if(contador<17)
+                    query=query+",";
+                else
+                    query=query+" WHERE IdJornada="+jornada;
+                contador++;
+                    }while(contador<18);
+  
+        System.out.println(query);   
+    //Hasta aqui parece que la query va bien, falta realizar los cambios en la tabla y continuar modificando este metodo
+    Connection connection=null;
+    ResultSet resultados=null;
+    try{
+    connection=DriverManager.getConnection(connectionPath,username,password);
+    PreparedStatement statement= connection.prepareStatement(query);
+    System.out.println(query);
+    statement.executeUpdate();
+    statement.close();
+    connection.close();
+    }catch(SQLException exception){
+        JOptionPane.showMessageDialog(null, exception);
+        System.err.println(exception);
+    }
+    }
+    
+    
+    public void PonerJornadaComboBox(JComboBox ListaComboBox[],int jornada){
+    // En este metodo se pone la jornada seleccionada en los comboBox
+    //vamos a empezar a trabajar en este metodo
+    //SELECT Orden FROM equipos INNER JOIN jornada ON equipos.IdEquipo=jornada.P08 WHERE IdJornada=12
+    String query="SELECT Nombre FROM equipos ORDER BY Nombre ASC";
+    String auxiliar="";
+    int contador=0;
+    int [] posiciones=new int[18];
+    do{    
+    if((contador+1)>9)
+      auxiliar="P"+(contador+1);
+    else
+      auxiliar="P0"+(contador+1);  
+    query="SELECT Orden FROM equipos INNER JOIN jornada ON equipos.IdEquipo=jornada."+auxiliar+" WHERE IdJornada="+jornada;
+    Connection connection=null;
+    ResultSet resultados=null;
+    try{
+connection=DriverManager.getConnection(connectionPath,username,password);
+PreparedStatement statement= connection.prepareStatement(query);
+resultados=statement.executeQuery(query);
+while (resultados.next()){
+    //Nombres[contador]=resultados.getString("Nombre");
+    posiciones[contador]=resultados.getInt("Orden");
+}
+statement.close();
+connection.close();
+    }catch(SQLException exception){
+        JOptionPane.showMessageDialog(null, exception);
+        System.err.println(exception);
+    }
+    posiciones[contador]=posiciones[contador]-1;
+    ListaComboBox[contador].setSelectedIndex(posiciones[contador]);
+    ListaComboBox[contador+18].setSelectedIndex(posiciones[contador]);
+    contador=contador+1;
+    }while(contador<18);
+    contador=0;
+    
+    }
+    
+    
     
     public void LimpiarInterfaz(){
     JComboBox ListaComboBox[]={jComboBox1,jComboBox2,jComboBox3,jComboBox4,jComboBox5,jComboBox6,jComboBox7,jComboBox8,jComboBox9,jComboBox10,
